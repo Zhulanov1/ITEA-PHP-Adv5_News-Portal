@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -13,7 +14,7 @@ final class PostController extends AbstractController
     /**
      * Renders post page.
      *
-     * @param int                       $id
+     * @param int $id
      * @param PostPresentationInterface $postPresentation
      *
      * @return Response

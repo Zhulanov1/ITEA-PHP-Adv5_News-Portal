@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository\Post;
 
 use App\Entity\Post;
@@ -8,8 +10,8 @@ use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method Post|null find($id, $lockMode = null, $lockVersion = null)
- * @method Post|null findOneBy(array $criteria, array $orderBy = null)
+ * @method null|Post find($id, $lockMode = null, $lockVersion = null)
+ * @method null|Post findOneBy(array $criteria, array $orderBy = null)
  * @method Post[]    findAll()
  * @method Post[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
@@ -35,5 +37,16 @@ class PostRepository extends ServiceEntityRepository implements PostRepositoryIn
         } catch (NonUniqueResultException $e) {
             return null;
         }
+    }
+
+    public function findByCategoryId(int $category_id): array
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.category = :category')
+            ->setParameter('category', $category_id)
+            ->andWhere('p.publicationDate IS NOT NULL')
+            ->getQuery()
+            ->getResult()
+            ;
     }
 }

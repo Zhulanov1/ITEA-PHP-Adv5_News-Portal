@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Service\HomePage;
@@ -19,7 +20,11 @@ final class FakeHomePageService implements HomePageServiceInterface
         for ($i = 0; $i < 10; $i++) {
             $post = new Post(
                 $faker->randomNumber(),
-                new Category($faker->sentence),
+                new Category(
+                    $faker->randomNumber(),
+                    $faker->sentence(),
+                    $faker->sentence()
+                ),
                 $faker->sentence
             );
             $post

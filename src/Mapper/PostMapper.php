@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Mapper;
@@ -13,7 +14,11 @@ final class PostMapper
     {
         $model = new PostModel(
             $entity->getId(),
-            new Category($entity->getCategory()->getTitle()),
+            new Category(
+                $entity->getCategory()->getId(),
+                $entity->getCategory()->getTitle(),
+                $entity->getCategory()->getSlug()
+            ),
             $entity->getTitle()
         );
 
