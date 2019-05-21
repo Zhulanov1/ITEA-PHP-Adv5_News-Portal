@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+{% endblock %}
+
+{% block body %}
+    <section class="regular-posts">
+        <h1>{{ category.title }}</h1>
+        {% if posts %}
+            {% for post in posts %}
+                <article class="post">
+                    <a href="#" class="category-link">{{ post.category.slug }}</a>
+                    <a href="{{ path('post_view', {id: post.id}) }}"><h4>{{ post.title }}</h4></a>
+                    <time>{{ post.publicationDate | date('d-m-Y H:i') }}</time>
+                </article>
+            {% endfor %}
+        {% else %}
+            <p>Posts not found!</p>
+        {% endif %}
+    </section>
+{% endblock %}

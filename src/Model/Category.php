@@ -1,19 +1,36 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model;
 
 final class Category
 {
-    private $name;
+    private $id;
 
-    public function __construct(string $name)
+    private $title;
+
+    private $slug;
+
+    public function __construct(int $id, string $title, string $slug)
     {
-        $this->name = $name;
+        $this->id = $id;
+        $this->title = $title;
+        $this->slug = $slug;
     }
 
-    public function getName(): string
+    public function getId(): int
     {
-        return $this->name;
+        return $this->id;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function getSlug(): string
+    {
+        return $this->slug;
     }
 }
