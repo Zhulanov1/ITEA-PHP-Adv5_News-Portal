@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Service\Post;
 
+use App\Collection\PostCollection;
 use App\Model\Category;
 use App\Model\Post;
 use Faker\Factory;
 
-final class FakePostPresentation implements PostPresentationInterface
+final class FakePostPresentationService implements PostPresentationServiceInterface
 {
     private $faker;
 
@@ -38,5 +39,9 @@ final class FakePostPresentation implements PostPresentationInterface
         ;
 
         return $post;
+    }
+
+    public function getPosts(Category $category): ?PostCollection
+    {
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository\Post;
 
+use App\Model\Category;
 use App\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
@@ -39,11 +40,11 @@ class PostRepository extends ServiceEntityRepository implements PostRepositoryIn
         }
     }
 
-    public function findByCategoryId(int $category_id): array
+    public function findByCategory(Category $category): array
     {
         return $this->createQueryBuilder('p')
             ->where('p.category = :category')
-            ->setParameter('category', $category_id)
+            ->setParameter('category', $category->getId())
             ->andWhere('p.publicationDate IS NOT NULL')
             ->getQuery()
             ->getResult()
