@@ -42,6 +42,11 @@ class Post
     private $publicationDate;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $modifiedDate;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="post")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -110,11 +115,19 @@ class Post
         return $this->publicationDate;
     }
 
-    public function setPublicationDate(\DateTimeInterface $publicationDate): self
+    public function getModifiedDate(): ?\DateTimeInterface
     {
-        $this->publicationDate = $publicationDate;
+        return $this->modifiedDate;
+    }
 
-        return $this;
+    public function publish()
+    {
+        $this->publicationDate = new \DateTime();
+    }
+
+    public function update()
+    {
+        $this->modifiedDate = new \DateTime();
     }
 
     public function getCategory(): Category

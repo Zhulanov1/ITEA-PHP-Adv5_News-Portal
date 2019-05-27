@@ -9,7 +9,11 @@ use App\Entity\Post;
 
 interface PostRepositoryInterface
 {
-    public function findById(int $id): ?Post;
+    public function findById(int $id, array $params = []): ?Post;
 
     public function findByCategory(Category $category): array;
+
+    public function save(Post $post): void;
+
+    public function update(): void;
 }

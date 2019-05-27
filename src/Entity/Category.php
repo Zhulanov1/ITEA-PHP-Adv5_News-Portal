@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Category\CategoryRepository")
  */
 class Category
 {
@@ -25,8 +25,6 @@ class Category
     private $title;
 
     /**
-     * @var string
-     *
      * @Gedmo\Slug(fields={"title"})
      * @ORM\Column(name="slug", type="string", length=100, unique=true)
      */

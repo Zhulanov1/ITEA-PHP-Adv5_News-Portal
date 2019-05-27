@@ -23,16 +23,36 @@ class PostRepository extends ServiceEntityRepository implements PostRepositoryIn
         parent::__construct($registry, Post::class);
     }
 
-    public function findById(int $id): ?Post
+    public function findById(int $id, array $params = []): ?Post
     {
         try {
-            return $this->createQueryBuilder('p')
-                ->where('p.id = :id')
-                ->setParameter('id', $id)
-                ->andWhere('p.publicationDate IS NOT NULL')
-                ->innerJoin('p.category', 'c')
-                ->addSelect('c')
-                ->getQuery()
+
+            $qb = $this->createQueryBuilder('p')
+                    ->where('p.id = :id')
+                    ->setParameter('id', $id)
+                    ->innerJoin('p.category', 'c')
+                    ->addSelect('c');
+
+            if (isset($params['post_status'])) {
+                switch ($params['post_status']) {
+                    case 'published':
+                    $qb->andWhere('p.publicationDate IS NOT NULL');
+                    break;
+
+                    case 'pending':
+                    $qb->andWhere('p.publicationDate IS NULL');
+                    break;
+
+                    //do nothing
+                    case 'any': ;
+                    break;
+                }
+
+            } else {
+                $qb->andWhere('p.publicationDate IS NOT NULL');
+            }
+
+            return $qb->getQuery()
                 ->getOneOrNullResult()
             ;
         } catch (NonUniqueResultException $e) {
@@ -49,5 +69,18 @@ class PostRepository extends ServiceEntityRepository implements PostRepositoryIn
             ->getQuery()
             ->getResult()
             ;
+    }
+
+    public function save(Post $post): void
+    {
+        $em = $this->getEntityManager();
+        $em->persist($post);
+        $em->flush();
+    }
+
+    public function update(): void
+    {
+        $em = $this->getEntityManager();
+        $em->flush();
     }
 }
